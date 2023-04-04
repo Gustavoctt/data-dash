@@ -1,9 +1,11 @@
 import styled, { css } from "styled-components";
 
 const STATUS_COLORS = {
-  yellow: "#B54708",
-  green: "#027a48",
-  red: "#C11574",
+  inDowntime: "#B54708",
+  inOperation: "#027a48",
+  inAlert: "#C11574",
+  plannedStop: "#2660A4",
+  unplannedStop: "#BABD6C",
 } as const;
 
 interface StatusProps {

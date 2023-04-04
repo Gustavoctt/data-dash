@@ -1,7 +1,17 @@
 export interface IAssets {
   assignedUserIds: [];
   companyId: number;
-  healthHistory: [{ status: string; timestamp: string }];
+  healthHistory: [
+    {
+      status:
+        | "inAlert"
+        | "inOperation"
+        | "inDowntime"
+        | "plannedStop"
+        | "unplannedStop";
+      timestamp: string;
+    }
+  ];
   healthscore: number;
   id: number;
   image: string;
@@ -18,6 +28,11 @@ export interface IAssets {
     power: number | null;
     rpm: number | null;
   };
-  status: string;
+  status:
+    | "inAlert"
+    | "inOperation"
+    | "inDowntime"
+    | "plannedStop"
+    | "unplannedStop";
   unitId: string;
 }

@@ -10,6 +10,7 @@ export const Sidebar = styled.div`
 
   padding-top: 90px;
   background-color: #ffffff;
+  z-index: 1000;
 
   a {
     text-decoration: none;

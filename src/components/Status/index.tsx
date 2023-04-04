@@ -1,27 +1,17 @@
-import styled, { css } from "styled-components";
+import * as S from "./styles";
 
-const STATUS_COLORS = {
-  yellow: "#B54708",
-  green: "#027a48",
-  red: "#C11574",
-} as const;
-
-interface StatusProps {
-  statusColor: keyof typeof STATUS_COLORS;
+enum StatusTypes {
+  "inAlert" = "Em Alerta",
+  "inOperation" = "Em Operação",
+  "inDowntime" = "Em Parada",
+  "plannedStop" = "Parada planejada",
+  "unplannedStop" = "Parada não planejada",
 }
 
-export const Status = styled.span<StatusProps>`
-  ${({ statusColor }) => {
-    return css`
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
+interface StatusProps {
+  status: keyof typeof StatusTypes;
+}
 
-      width: fit-content;
-      color: ${statusColor && [STATUS_COLORS[statusColor]]};
-      background-color: ${statusColor && `${[STATUS_COLORS[statusColor]]}1a`};
-      padding: 2px 8px;
-      border-radius: 8px;
-    `;
-  }}
-`;
+export function Status({ status }: StatusProps) {
+  return <S.Status statusColor={status}>{StatusTypes[status]}</S.Status>;
+}
