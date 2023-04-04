@@ -25,20 +25,10 @@ export const Header = styled.header`
   justify-content: space-between;
 `;
 
-export const Info = styled(Box)`
-  width: fit-content;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-
-  gap: 2rem;
-`;
-
 export const Specifications = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   gap: 24px;
-  margin-top: 2rem;
 `;
 
 export const Content = styled.div`
