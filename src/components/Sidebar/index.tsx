@@ -9,7 +9,7 @@ export function Sidebar() {
     {
       id: "assets",
       label: "Assets",
-      path: "/",
+      path: "/asset",
       icon: <Engine size={24} />,
     },
     {
