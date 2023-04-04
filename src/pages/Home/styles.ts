@@ -9,6 +9,7 @@ export const HomeContainer = styled.div`
 export const Content = styled.div`
   padding: 20px;
   width: 100vw;
+  margin-left: 240px;
 `;
 
 export const Box = styled.div`
@@ -72,32 +73,6 @@ export const HistoryList = styled.div`
       line-height: 1.4;
     }
   }
-`;
-
-const STATUS_COLORS = {
-  yellow: "#B54708",
-  green: "#027a48",
-  red: "#C11574",
-} as const;
-
-interface StatusProps {
-  statusColor: keyof typeof STATUS_COLORS;
-}
-
-export const Status = styled.span<StatusProps>`
-  ${({ statusColor }) => {
-    return css`
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-
-      width: fit-content;
-      color: ${statusColor && [STATUS_COLORS[statusColor]]};
-      background-color: ${statusColor && `${[STATUS_COLORS[statusColor]]}1a`};
-      padding: 2px 8px;
-      border-radius: 8px;
-    `;
-  }}
 `;
 
 export const Button = styled(Link)`

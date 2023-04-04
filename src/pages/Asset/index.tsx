@@ -1,15 +1,59 @@
-import * as S from "./styles";
+import { IUsers } from "../../types/users";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { IAssets } from "../../types/assets";
+import { Assets, Users } from "../../services";
+import { normalizeDateToLocale } from "../../utils";
+import { WarningCircle, CheckCircle, StopCircle } from "@phosphor-icons/react";
 
 import * as Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
-import { Sidebar } from "../../components/Sidebar";
+
+import * as S from "./styles";
 import Box from "../../components/Box";
+import { Status } from "../../components/Status";
+import { Sidebar } from "../../components/Sidebar";
+
+// TODO
+// [ x ] - Pegar os dados da API, para um unico elemento
+// [] - Montar em tela os dados
+// [] - "Juntar" dados de User com Assigned Users
+// [] - Trazer o icone confome for o status do asset
+// [] - Componentizar as linhas da tabela
 
 export function Asset() {
+  const [asset, setAsset] = useState<IAssets>();
+  const [users, setUsers] = useState<IUsers[]>();
+
+  const { id } = useParams();
+
+  const getAppItems = async (id: string | number) => {
+    try {
+      const asset = await Assets.getUniqueAsset(id);
+
+      const users = await Users.getAllUsers();
+
+      const tranformedUsers = users.filter(
+        (item) => !!asset.assignedUserIds.find((id) => item.id === id)
+      );
+
+      setAsset(asset);
+      setUsers(tranformedUsers);
+    } catch (error) {
+      throw new Error("Houve um erro ao obter os itens");
+    }
+  };
+
+  useEffect(() => {
+    if (id) {
+      getAppItems(id);
+    }
+  }, [id]);
+
   const options: Highcharts.Options = {
     chart: {
-      // width: 500,
-      // height: 300,
+      width: 500,
+      height: 300,
       backgroundColor: "",
     },
     title: {
@@ -27,7 +71,13 @@ export function Asset() {
       <Sidebar />
       <S.ContainerRigth>
         <S.Header>
-          <p>Name/Model and Status</p>
+          <S.Info>
+            <div>
+              <p>Name : {asset?.name}</p>
+              <p>Model : {asset?.model}</p>
+            </div>
+            <CheckCircle size={32} color="green" />
+          </S.Info>
           <p>Company Name - ID</p>
         </S.Header>
 
@@ -57,24 +107,23 @@ export function Asset() {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>02/04/2023 00:00</td>
-                  <td>
-                    <S.Span color="#027a48">Em funcionamento</S.Span>
-                  </td>
-                </tr>
-                <tr>
-                  <td>02/04/2023 00:00</td>
-                  <td>
-                    <S.Span color="#C11574">Em funcionamento</S.Span>
-                  </td>
-                </tr>
-                <tr>
-                  <td>02/04/2023 00:00</td>
-                  <td>
-                    <span>Em funcionamento</span>
-                  </td>
-                </tr>
+                {asset?.healthHistory.map((item, index) => (
+                  <tr key={index}>
+                    <td>{normalizeDateToLocale(item.timestamp)}</td>
+                    <td>
+                      {item.status === "inOperation" && (
+                        <Status statusColor="green">{item.status}</Status>
+                      )}
+                      {item.status === "inDowntime" && (
+                        <Status statusColor="red">{item.status}</Status>
+                      )}
+                      {item.status !== "inDowntime" &&
+                        item.status !== "inOperation" && (
+                          <Status statusColor="yellow">{item.status}</Status>
+                        )}
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </S.Table>
           </Box>
@@ -89,21 +138,13 @@ export function Asset() {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <S.Avatar>JD</S.Avatar>
-                  <td>Jhon Doe</td>
-                  <td>jhondow@teste.com</td>
-                </tr>
-                <tr>
-                  <S.Avatar>JD</S.Avatar>
-                  <td>Jhon Doe</td>
-                  <td>jhondow@teste.com</td>
-                </tr>
-                <tr>
-                  <S.Avatar>JD</S.Avatar>
-                  <td>Jhon Doe</td>
-                  <td>jhondow@teste.com</td>
-                </tr>
+                {users?.map((user) => (
+                  <tr>
+                    <S.Avatar>JD</S.Avatar>
+                    <td>{user.name}</td>
+                    <td>{user.email}</td>
+                  </tr>
+                ))}
               </tbody>
             </S.Table>
           </Box>

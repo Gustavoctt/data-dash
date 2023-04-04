@@ -5,7 +5,9 @@ import * as S from "./styles";
 import { Assets } from "../../services";
 import { useEffect, useState } from "react";
 import { IAssets } from "../../types/assets";
+import { Status } from "../../components/Status";
 
+// TODO
 // [ x ] - Criar o layout ta tela de items
 // [ x ] - Fazer a conexão com a API e retornar para a HOME
 // [ x ] - Tipar os dados
@@ -27,6 +29,17 @@ export function Home() {
   useEffect(() => {
     getAppItems();
   }, []);
+
+  function translateStatus(status: string) {
+    switch (status) {
+      case "inAlert":
+        return "Em alerta";
+      case "inOperation":
+        return "Em Operação";
+      case "inDowntime":
+        return "Em Parada";
+    }
+  }
 
   return (
     <S.HomeContainer>
@@ -55,20 +68,20 @@ export function Home() {
                       <td>{asset.healthscore}%</td>
                       <td>
                         {asset.status === "inOperation" && (
-                          <S.Status statusColor="green">
-                            {asset.status}
-                          </S.Status>
+                          <Status statusColor="green">
+                            {translateStatus(asset.status)}
+                          </Status>
                         )}
                         {asset.status === "inDowntime" && (
-                          <S.Status statusColor="yellow">
-                            {asset.status}
-                          </S.Status>
+                          <Status statusColor="red">
+                            {translateStatus(asset.status)}
+                          </Status>
                         )}
                         {asset.status !== "inDowntime" &&
                           asset.status !== "inOperation" && (
-                            <S.Status statusColor="red">
-                              {asset.status}
-                            </S.Status>
+                            <Status statusColor="yellow">
+                              {translateStatus(asset.status)}
+                            </Status>
                           )}
                       </td>
                       <td>

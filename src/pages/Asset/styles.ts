@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Box from "../../components/Box";
 
 export const Container = styled.div`
   display: flex;
@@ -8,6 +9,7 @@ export const Container = styled.div`
 export const ContainerRigth = styled.div`
   width: 100vw;
   height: 100vh;
+  margin-left: 240px;
 
   padding: 20px 40px;
 
@@ -21,21 +23,20 @@ export const Header = styled.header`
   justify-content: space-between;
 `;
 
+export const Info = styled(Box)`
+  width: fit-content;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  gap: 2rem;
+`;
+
 export const Specifications = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   gap: 24px;
   margin-top: 2rem;
-`;
-
-export const Box = styled.div`
-  width: 100%;
-  gap: 1rem;
-  padding: 16px;
-  display: flex;
-  border-radius: 12px;
-  flex-direction: column;
-  background-color: #c1cad680;
 `;
 
 export const Content = styled.div`
@@ -78,17 +79,6 @@ export const Table = styled.table`
     font-size: 0.85rem;
     line-height: 1.4;
   }
-`;
-
-type SpanProps = {
-  color: string;
-};
-
-export const Span = styled.span<SpanProps>`
-  color: #027a48;
-  background-color: #027a481a;
-  padding: 2px 8px;
-  border-radius: 8px;
 `;
 
 export const Avatar = styled.td`
