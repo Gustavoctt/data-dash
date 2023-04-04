@@ -2,7 +2,7 @@ import { IUsers } from "../../types/users";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { IAssets } from "../../types/assets";
-import { Assets, Users } from "../../services";
+import { Assets, Companies, Users } from "../../services";
 import { normalizeDateToLocale } from "../../utils";
 
 import * as Highcharts from "highcharts";
@@ -15,6 +15,7 @@ import { Sidebar } from "../../components/Sidebar";
 import { AssetInfo } from "../../components/AssetInfo";
 import { Loading } from "../../hooks";
 import { Skeleton } from "antd";
+import { ICompany } from "../../types/companies";
 
 // TODO
 // [ x ] - Pegar os dados da API, para um unico elemento
@@ -26,6 +27,7 @@ import { Skeleton } from "antd";
 export function Asset() {
   const [asset, setAsset] = useState<IAssets[]>([]);
   const [users, setUsers] = useState<IUsers[]>([]);
+  const [company, setCompanies] = useState<ICompany[]>([]);
   const { hideLoading, showLoading, isLoading } = Loading.useLoading();
 
   const { id } = useParams();
@@ -41,9 +43,11 @@ export function Asset() {
         (item) => !!asset.assignedUserIds.find((id) => item.id === id)
       );
 
-      setUsers(tranformedUsers);
+      const company = await Companies.getAllCompanies();
 
       setAsset([asset]);
+      setUsers(tranformedUsers);
+      setCompanies(company);
     } catch (error) {
       throw new Error("Houve um erro ao obter os itens");
     } finally {
@@ -75,11 +79,11 @@ export function Asset() {
         type: "pie",
         data: [
           {
-            name: "health life",
+            name: "Vida Útil",
             y: asset[0]?.healthscore,
           },
           {
-            name: "desgaste",
+            name: "Desgaste",
             y: 100 - asset[0]?.healthscore,
           },
         ],
@@ -98,7 +102,16 @@ export function Asset() {
               status={asset[0]?.status}
             />
           </S.Specifications>
-          <p>Company Name - ID</p>
+          <S.CompanyInfo>
+            <Skeleton
+              style={{ width: "140px" }}
+              paragraph={{ rows: 1 }}
+              title={false}
+              loading={isLoading}
+            >
+              <p>{company.map((item) => item.name)}</p>
+            </Skeleton>
+          </S.CompanyInfo>
         </S.Header>
 
         <S.Content>
@@ -121,7 +134,7 @@ export function Asset() {
                 <tbody>
                   {asset.map((item) =>
                     item.healthHistory.map((health) => (
-                      <tr key={item.id}>
+                      <tr key={health.timestamp}>
                         <td>{normalizeDateToLocale(health.timestamp)}</td>
                         <td>
                           <Status status={health.status} />

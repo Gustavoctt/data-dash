@@ -26,9 +26,15 @@ export const Header = styled.header`
 `;
 
 export const Specifications = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  display: flex;
   gap: 24px;
+`;
+
+export const CompanyInfo = styled(Box)`
+  display: flex;
+  width: fit-content;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const Content = styled.div`

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ICompany } from "../../types/units";
+import { ICompany } from "../../types/companies";
 
 const getAllCompanies = async (): Promise<ICompany[]> => {
   try {
