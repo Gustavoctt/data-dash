@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import Box from "../../components/Box";
 
+import { Avatar } from "antd";
+
 export const Container = styled.div`
   display: flex;
   flex-direction: row;
@@ -50,6 +52,7 @@ export const Table = styled.table`
   width: 100%;
   border-collapse: collapse;
   min-width: 400px;
+
   th {
     background-color: #f3f6f9;
     padding: 1rem;
@@ -81,14 +84,9 @@ export const Table = styled.table`
   }
 `;
 
-export const Avatar = styled.td`
+export const AvatarComponent = styled(Avatar)`
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 6px 0 0 6px;
-
-  width: 40px;
-  height: 40px;
-  background: #ddff66;
-  border-radius: 50%;
 `;

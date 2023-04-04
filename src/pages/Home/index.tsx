@@ -12,6 +12,7 @@ import { Status } from "../../components/Status";
 // [ x ] - Fazer a conexão com a API e retornar para a HOME
 // [ x ] - Tipar os dados
 // [] - Criar um Loagind enquanto traz os dados
+// [] - Usar componentes do AntDesign
 
 export function Home() {
   const [assets, setAssets] = useState<IAssets[]>([]);
@@ -29,17 +30,6 @@ export function Home() {
   useEffect(() => {
     getAppItems();
   }, []);
-
-  function translateStatus(status: string) {
-    switch (status) {
-      case "inAlert":
-        return "Em alerta";
-      case "inOperation":
-        return "Em Operação";
-      case "inDowntime":
-        return "Em Parada";
-    }
-  }
 
   return (
     <S.HomeContainer>
@@ -67,22 +57,7 @@ export function Home() {
                       <td>{asset.name}</td>
                       <td>{asset.healthscore}%</td>
                       <td>
-                        {asset.status === "inOperation" && (
-                          <Status statusColor="green">
-                            {translateStatus(asset.status)}
-                          </Status>
-                        )}
-                        {asset.status === "inDowntime" && (
-                          <Status statusColor="red">
-                            {translateStatus(asset.status)}
-                          </Status>
-                        )}
-                        {asset.status !== "inDowntime" &&
-                          asset.status !== "inOperation" && (
-                            <Status statusColor="yellow">
-                              {translateStatus(asset.status)}
-                            </Status>
-                          )}
+                        <Status status={asset.status} />
                       </td>
                       <td>
                         <S.Button to={`/asset/${asset.id}`}>

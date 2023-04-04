@@ -6,6 +6,8 @@ import { Assets, Users } from "../../services";
 import { normalizeDateToLocale } from "../../utils";
 import { WarningCircle, CheckCircle, StopCircle } from "@phosphor-icons/react";
 
+import { Avatar } from "antd";
+
 import * as Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 
@@ -17,8 +19,8 @@ import { Sidebar } from "../../components/Sidebar";
 // TODO
 // [ x ] - Pegar os dados da API, para um unico elemento
 // [] - Montar em tela os dados
-// [] - "Juntar" dados de User com Assigned Users
-// [] - Trazer o icone confome for o status do asset
+// [ x ] - "Juntar" dados de User com Assigned Users
+// [ x ] - Trazer o icone confome for o status do asset
 // [] - Componentizar as linhas da tabela
 
 export function Asset() {
@@ -49,6 +51,10 @@ export function Asset() {
       getAppItems(id);
     }
   }, [id]);
+
+  function getFirstLetter(name: string) {
+    return name.split(" ").map((item) => item.charAt(0));
+  }
 
   const options: Highcharts.Options = {
     chart: {
@@ -111,16 +117,7 @@ export function Asset() {
                   <tr key={index}>
                     <td>{normalizeDateToLocale(item.timestamp)}</td>
                     <td>
-                      {item.status === "inOperation" && (
-                        <Status statusColor="green">{item.status}</Status>
-                      )}
-                      {item.status === "inDowntime" && (
-                        <Status statusColor="red">{item.status}</Status>
-                      )}
-                      {item.status !== "inDowntime" &&
-                        item.status !== "inOperation" && (
-                          <Status statusColor="yellow">{item.status}</Status>
-                        )}
+                      <Status status={item.status} />
                     </td>
                   </tr>
                 ))}
@@ -140,7 +137,9 @@ export function Asset() {
               <tbody>
                 {users?.map((user) => (
                   <tr>
-                    <S.Avatar>JD</S.Avatar>
+                    <S.AvatarComponent style={{ backgroundColor: "#87d068" }}>
+                      {getFirstLetter(user.name)}
+                    </S.AvatarComponent>
                     <td>{user.name}</td>
                     <td>{user.email}</td>
                   </tr>
