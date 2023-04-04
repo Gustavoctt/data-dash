@@ -7,6 +7,9 @@ import { createGlobalStyle } from "styled-components";
  Menu Selected: #124559
 */
 
+// TODO
+// [] - Criar uma biblioteca de cores
+
 export const GlobalStyle = createGlobalStyle`
  * {
     margin: 0;
