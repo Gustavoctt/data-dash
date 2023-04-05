@@ -2,7 +2,7 @@ import { IUsers } from "../../types/users";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { IAssets } from "../../types/assets";
-import { Assets, Companies, Users } from "../../services";
+import { Assets, Companies, Units, Users } from "../../services";
 import { normalizeDateToLocale } from "../../utils";
 
 import * as Highcharts from "highcharts";
@@ -14,20 +14,22 @@ import { Status } from "../../components/Status";
 import { Sidebar } from "../../components/Sidebar";
 import { AssetInfo } from "../../components/AssetInfo";
 import { Loading } from "../../hooks";
-import { Skeleton } from "antd";
+import { Image, Skeleton } from "antd";
 import { ICompany } from "../../types/companies";
+import Item from "antd/es/list/Item";
+import { IUnits } from "../../types/units";
 
 // TODO
 // [ x ] - Pegar os dados da API, para um unico elemento
 // [ x ] - Montar em tela os dados
 // [ x ] - "Juntar" dados de User com Assigned Users
 // [ x ] - Trazer o icone confome for o status do asset
-// [] - Componentizar as linhas da tabela
 
 export function Asset() {
   const [asset, setAsset] = useState<IAssets[]>([]);
   const [users, setUsers] = useState<IUsers[]>([]);
   const [company, setCompanies] = useState<ICompany[]>([]);
+  const [units, setUnits] = useState<IUnits[]>([]);
   const { hideLoading, showLoading, isLoading } = Loading.useLoading();
 
   const { id } = useParams();
@@ -44,10 +46,16 @@ export function Asset() {
       );
 
       const company = await Companies.getAllCompanies();
+      const unit = await Units.getAllUnits();
+
+      const getAssetUnit = unit.filter(
+        (item) => item.id == Number(asset.unitId)
+      );
 
       setAsset([asset]);
       setUsers(tranformedUsers);
       setCompanies(company);
+      setUnits(getAssetUnit);
     } catch (error) {
       throw new Error("Houve um erro ao obter os itens");
     } finally {
@@ -64,6 +72,10 @@ export function Asset() {
   function getFirstLetter(name: string) {
     return name.split(" ").map((item) => item.charAt(0));
   }
+
+  const specifications = asset.map((item) => item.specifications);
+
+  const machineImage = asset.map((item) => item.image);
 
   const options: Highcharts.Options = {
     chart: {
@@ -95,21 +107,22 @@ export function Asset() {
       <Sidebar />
       <S.ContainerRigth>
         <S.Header>
-          <S.Specifications>
+          <S.AssetData>
             <AssetInfo
               name={asset[0]?.name}
               model={asset[0]?.model}
               status={asset[0]?.status}
             />
-          </S.Specifications>
+          </S.AssetData>
           <S.CompanyInfo>
             <Skeleton
               style={{ width: "140px" }}
-              paragraph={{ rows: 1 }}
+              paragraph={{ rows: 2 }}
               title={false}
               loading={isLoading}
             >
               <p>{company.map((item) => item.name)}</p>
+              <p>{units.map((item) => item.name)}</p>
             </Skeleton>
           </S.CompanyInfo>
         </S.Header>
@@ -172,29 +185,9 @@ export function Asset() {
             </S.Table>
           </Box>
           <Box>
-            <h1>Sensors</h1>
-            <S.Table>
-              <thead>
-                <tr>
-                  <th>Especificação</th>
-                  <th>Imagem</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>HUIDHUID</td>
-                  <td>Visualizar</td>
-                </tr>
-                <tr>
-                  <td>HUIDHUID</td>
-                  <td>Visualizar</td>
-                </tr>
-                <tr>
-                  <td>HUIDHUID</td>
-                  <td>Visualizar</td>
-                </tr>
-              </tbody>
-            </S.Table>
+            <Skeleton loading={isLoading} paragraph={{ rows: 1 }} title={false}>
+              <Image src={machineImage[0]} />
+            </Skeleton>
           </Box>
         </S.Content>
       </S.ContainerRigth>
