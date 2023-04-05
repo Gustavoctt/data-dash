@@ -25,15 +25,21 @@ export const Header = styled.header`
   justify-content: space-between;
 `;
 
-export const Specifications = styled.div`
+export const AssetData = styled.div`
   display: flex;
   gap: 24px;
+`;
+
+export const Specifications = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+  margin-top: 24px;
 `;
 
 export const CompanyInfo = styled(Box)`
   display: flex;
   width: fit-content;
-  align-items: center;
   justify-content: center;
 `;
 
