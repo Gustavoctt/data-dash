@@ -38,5 +38,19 @@ export const SidebarContent = styled.div<SidebarProps>`
     &:hover {
       background-color: #f7f7fb;
     }
+
+    ${isSelected &&
+    css`
+      &::after {
+        position: absolute;
+        right: 0;
+        content: "";
+        width: 4px;
+        border-radius: 4px 0 0 4px;
+        height: 48px;
+        z-index: 1000;
+        background-color: #0d0d54;
+      }
+    `}
   `}
 `;

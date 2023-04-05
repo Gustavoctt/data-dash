@@ -6,12 +6,12 @@ import { Avatar } from "antd";
 export const Container = styled.div`
   display: flex;
   flex-direction: row;
+  margin-left: 240px;
 `;
 
 export const ContainerRigth = styled.div`
   width: 100vw;
   height: 100vh;
-  margin-left: 240px;
 
   padding: 20px 40px;
 

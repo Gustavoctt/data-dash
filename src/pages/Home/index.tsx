@@ -40,7 +40,6 @@ export function Home() {
 
   return (
     <S.HomeContainer>
-      <Sidebar />
       <S.Content>
         <Box>
           <Skeleton loading={isLoading}>

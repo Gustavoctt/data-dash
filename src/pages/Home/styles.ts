@@ -4,12 +4,12 @@ import styled, { css } from "styled-components";
 export const HomeContainer = styled.div`
   display: flex;
   flex-direction: row;
+  margin-left: 240px;
 `;
 
 export const Content = styled.div`
   padding: 20px;
   width: 100vw;
-  margin-left: 240px;
 `;
 
 export const Box = styled.div`

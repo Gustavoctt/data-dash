@@ -16,7 +16,6 @@ import { AssetInfo } from "../../components/AssetInfo";
 import { Loading } from "../../hooks";
 import { Image, Skeleton } from "antd";
 import { ICompany } from "../../types/companies";
-import Item from "antd/es/list/Item";
 import { IUnits } from "../../types/units";
 
 // TODO
@@ -24,6 +23,7 @@ import { IUnits } from "../../types/units";
 // [ x ] - Montar em tela os dados
 // [ x ] - "Juntar" dados de User com Assigned Users
 // [ x ] - Trazer o icone confome for o status do asset
+// [] - Trazer os "specifications"
 
 export function Asset() {
   const [asset, setAsset] = useState<IAssets[]>([]);
@@ -104,7 +104,6 @@ export function Asset() {
   };
   return (
     <S.Container>
-      <Sidebar />
       <S.ContainerRigth>
         <S.Header>
           <S.AssetData>

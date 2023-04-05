@@ -14,7 +14,7 @@ export function Sidebar() {
     },
     {
       id: "company",
-      path: "/asset/1",
+      path: "/companies",
       label: "Empresas",
       icon: <House size={24} />,
     },
