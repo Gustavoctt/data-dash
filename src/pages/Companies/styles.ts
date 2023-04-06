@@ -1,5 +1,4 @@
-import { Link } from "react-router-dom";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 export const HomeContainer = styled.div`
   display: flex;
@@ -45,6 +44,10 @@ export const HistoryList = styled.div`
   flex: 1;
   overflow: auto;
   margin-top: 2rem;
+
+  input {
+    margin-bottom: 2rem;
+  }
   table {
     width: 100%;
     border-collapse: collapse;

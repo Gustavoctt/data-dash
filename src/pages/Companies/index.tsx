@@ -1,35 +1,45 @@
-import Box from "../../components/Box";
-import { useEffect, useState } from "react";
-import { Sidebar } from "../../components/Sidebar";
-
 import * as S from "./styles";
-
-import { Input, Skeleton } from "antd";
 import { Loading } from "../../hooks";
+import Box from "../../components/Box";
 import { Companies } from "../../services";
+import { useEffect, useState } from "react";
+import { Alert, Input, Skeleton } from "antd";
 import { ICompany } from "../../types/companies";
 
 export function PageCompanies() {
-  const [company, setCompany] = useState<ICompany[]>([]);
-  // const [addQuestion, setAddQuestion] = useState(false);
+  const [companies, setCompanies] = useState<ICompany[]>([]);
+  const [search, setSearch] = useState<string>("");
   const { hideLoading, showLoading, isLoading } = Loading.useLoading();
 
-  const getAppItems = async () => {
+  useEffect(() => {
+    getAllCompanies();
+  }, []);
+
+  const getAllCompanies = async () => {
     showLoading();
     try {
-      const getCompany = await Companies.getAllCompanies();
+      const allCompanies = await Companies.getAllCompanies();
 
-      setCompany(getCompany);
+      setCompanies(allCompanies);
     } catch (error) {
-      throw new Error("Houve um erro ao obter os itens");
+      return (
+        <Alert
+          message="Error"
+          description="There was an error getting the companies, please try again!"
+          type="error"
+          showIcon
+        />
+      );
     } finally {
       hideLoading();
     }
   };
 
-  useEffect(() => {
-    getAppItems();
-  }, []);
+  const filteredCompanies = companies.filter((company) => {
+    if (company.name.toLowerCase().includes(search.toLowerCase())) return true;
+
+    return false;
+  });
 
   return (
     <S.HomeContainer>
@@ -38,23 +48,28 @@ export function PageCompanies() {
           <Skeleton loading={isLoading}>
             <S.HistoryContainer>
               <S.Header>
-                <h1>Empresas</h1>
+                <h1>Companies</h1>
               </S.Header>
 
               <S.HistoryList>
+                <Input
+                  placeholder="Search by company"
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                />
                 <table>
                   <thead>
                     <tr>
                       <th>ID</th>
-                      <th>Nome</th>
+                      <th>Name</th>
                     </tr>
                   </thead>
 
                   <tbody>
-                    {company.map((asset) => (
-                      <tr key={asset.id}>
-                        <td>{asset.id}</td>
-                        <td>{asset.name}</td>
+                    {filteredCompanies.map((company) => (
+                      <tr key={company.id}>
+                        <td>{company.id}</td>
+                        <td>{company.name}</td>
                       </tr>
                     ))}
                   </tbody>

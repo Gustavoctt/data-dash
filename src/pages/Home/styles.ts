@@ -38,6 +38,9 @@ export const HistoryList = styled.div`
   flex: 1;
   overflow: auto;
   margin-top: 2rem;
+  input {
+    margin-bottom: 2rem;
+  }
   table {
     width: 100%;
     border-collapse: collapse;

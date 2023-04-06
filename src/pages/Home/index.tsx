@@ -1,42 +1,51 @@
-import Box from "../../components/Box";
-import { Sidebar } from "../../components/Sidebar";
-import { Eye } from "@phosphor-icons/react";
 import * as S from "./styles";
+import { Loading } from "../../hooks";
+import Box from "../../components/Box";
 import { Assets } from "../../services";
+import { Eye } from "@phosphor-icons/react";
 import { useEffect, useState } from "react";
 import { IAssets } from "../../types/assets";
+import { Alert, Input, Skeleton } from "antd";
 import { Status } from "../../components/Status";
-
-import { Skeleton } from "antd";
-import { Loading } from "../../hooks";
-
-// TODO
-// [ x ] - Criar o layout ta tela de items
-// [ x ] - Fazer a conexão com a API e retornar para a HOME
-// [ x ] - Tipar os dados
-// [ x ] - Usar componentes do AntDesign
-// [ x ] - Criar um Loagind enquanto traz os dados
 
 export function Home() {
   const [assets, setAssets] = useState<IAssets[]>([]);
+  const [search, setSearch] = useState<string>("");
   const { hideLoading, showLoading, isLoading } = Loading.useLoading();
 
-  const getAppItems = async () => {
+  useEffect(() => {
+    getAllAssets();
+  }, []);
+
+  const getAllAssets = async () => {
     showLoading();
     try {
-      const asset = await Assets.getAllAssets();
+      const allAssets = await Assets.getAllAssets();
 
-      setAssets(asset);
+      setAssets(allAssets);
     } catch (error) {
-      throw new Error("Houve um erro ao obter os itens");
+      return (
+        <Alert
+          message="Error"
+          description="There was an error getting the assets, please try again!"
+          type="error"
+          showIcon
+        />
+      );
     } finally {
       hideLoading();
     }
   };
 
-  useEffect(() => {
-    getAppItems();
-  }, []);
+  const filteredAssets = assets.filter((asset) => {
+    if (
+      asset.status.toLowerCase().includes(search.toLowerCase()) ||
+      asset.name.toLowerCase().includes(search.toLowerCase())
+    )
+      return true;
+
+    return false;
+  });
 
   return (
     <S.HomeContainer>
@@ -44,22 +53,27 @@ export function Home() {
         <Box>
           <Skeleton loading={isLoading}>
             <S.HistoryContainer>
-              <h1>Todos os ativos</h1>
+              <h1>All assets</h1>
 
               <S.HistoryList>
+                <Input
+                  placeholder="Search by name or status"
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                />
                 <table>
                   <thead>
                     <tr>
                       <th>ID</th>
-                      <th>Nome</th>
-                      <th>Vida Util</th>
+                      <th>Name</th>
+                      <th>Life cycle</th>
                       <th>Status</th>
                       <th></th>
                     </tr>
                   </thead>
 
                   <tbody>
-                    {assets.map((asset) => (
+                    {filteredAssets.map((asset) => (
                       <tr key={asset.id}>
                         <td>{asset.id}</td>
                         <td>{asset.name}</td>
@@ -70,7 +84,7 @@ export function Home() {
                         <td>
                           <S.Button to={`/asset/${asset.id}`}>
                             <Eye size={24} />
-                            Visualizar
+                            View
                           </S.Button>
                         </td>
                       </tr>

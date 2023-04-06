@@ -1,42 +1,66 @@
-import Box from "../../components/Box";
-import { Sidebar } from "../../components/Sidebar";
-import { Eye } from "@phosphor-icons/react";
-import * as S from "./styles";
-import { Units, Users } from "../../services";
-import { useEffect, useState } from "react";
-
-import { Skeleton } from "antd";
+import { Alert, Input, Skeleton } from "antd";
 import { Loading } from "../../hooks";
+import Box from "../../components/Box";
 import { IUsers } from "../../types/users";
 import { IUnits } from "../../types/units";
+import { useEffect, useState } from "react";
+import { Units, Users } from "../../services";
 
-// TODO
-// [ x ] - Criar o layout ta tela de items
-// [ x ] - Fazer a conexão com a API e retornar para a HOME
-// [ x ] - Tipar os dados
-// [ x ] - Usar componentes do AntDesign
-// [ x ] - Criar um Loagind enquanto traz os dados
+import * as S from "./styles";
+interface IUsersWhithUnit extends IUsers {
+  unit: IUnits | undefined;
+}
 
 export function PageUsers() {
-  const [users, setUsers] = useState<IUsers[]>([]);
+  const [users, setUsers] = useState<IUsersWhithUnit[]>([]);
+  const [search, setSearch] = useState<string>("");
   const { hideLoading, showLoading, isLoading } = Loading.useLoading();
 
-  const getAppItems = async () => {
+  useEffect(() => {
+    getAllUsers();
+  }, []);
+
+  const getAllUsers = async () => {
     showLoading();
     try {
-      const getUsers = await Users.getAllUsers();
+      const allUsers = await Users.getAllUsers();
 
-      setUsers(getUsers);
+      const allUnits = await Units.getAllUnits();
+
+      const usersWithUnits = allUsers.map((user) => {
+        const unit = allUnits.find((unit) => unit.id === user.unitId);
+
+        return {
+          ...user,
+          unit,
+        };
+      });
+
+      setUsers(usersWithUnits);
     } catch (error) {
-      throw new Error("Houve um erro ao obter os itens");
+      return (
+        <Alert
+          message="Error"
+          description="There was an error getting the users, please try again!"
+          type="error"
+          showIcon
+        />
+      );
     } finally {
       hideLoading();
     }
   };
 
-  useEffect(() => {
-    getAppItems();
-  }, []);
+  const filteredUsers = users.filter((user) => {
+    if (
+      user.name.toLowerCase().includes(search.toLowerCase()) ||
+      user.email.toLowerCase().includes(search.toLowerCase()) ||
+      user.unit?.name.toLowerCase().includes(search.toLowerCase())
+    )
+      return true;
+
+    return false;
+  });
 
   return (
     <S.HomeContainer>
@@ -44,26 +68,32 @@ export function PageUsers() {
         <Box>
           <Skeleton loading={isLoading}>
             <S.HistoryContainer>
-              <h1>Usuários</h1>
+              <h1>Users</h1>
 
               <S.HistoryList>
+                <Input
+                  placeholder="Search by name, email or unit"
+                  type="text"
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                />
                 <table>
                   <thead>
                     <tr>
                       <th>ID</th>
-                      <th>Nome</th>
+                      <th>Name</th>
                       <th>Email</th>
-                      <th>Unidade</th>
+                      <th>Unit</th>
                     </tr>
                   </thead>
 
                   <tbody>
-                    {users.map((asset) => (
-                      <tr key={asset.id}>
-                        <td>{asset.id}</td>
-                        <td>{asset.name}</td>
-                        <td>{asset.email}</td>
-                        <td>{asset.unitId}</td>
+                    {filteredUsers.map((user) => (
+                      <tr key={user.id}>
+                        <td>{user.id}</td>
+                        <td>{user.name}</td>
+                        <td>{user.email}</td>
+                        <td>{user.unit?.name || "Unit not found"}</td>
                       </tr>
                     ))}
                   </tbody>
