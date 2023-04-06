@@ -1,5 +1,5 @@
 export interface IAssets {
-  assignedUserIds: [];
+  assignedUserIds: number[];
   companyId: number;
   healthHistory: [
     {

@@ -10,3 +10,7 @@ export const normalizeDateToLocale = (date: string) => {
 
   return `${normalizedDate} às ${normalizedTime}`;
 };
+
+export function getFirstLetter(name: string) {
+  return name.split(" ").map((item) => item.charAt(0));
+}
