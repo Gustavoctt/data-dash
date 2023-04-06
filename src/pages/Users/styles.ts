@@ -59,7 +59,7 @@ export const HistoryList = styled.div`
       }
       &:last-child {
         border-top-right-radius: 8px;
-        width: 10%;
+        width: 20%;
         padding: 1rem;
       }
     }

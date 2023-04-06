@@ -1,3 +1,4 @@
+import { Button } from "antd";
 import styled from "styled-components";
 
 export const HomeContainer = styled.div`
@@ -88,4 +89,10 @@ export const FormCompany = styled.form`
   display: flex;
   max-width: 50%;
   margin-top: 2rem;
+`;
+
+export const AntDesignButton = styled(Button)`
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 `;

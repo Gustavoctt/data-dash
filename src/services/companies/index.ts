@@ -9,10 +9,24 @@ const getAllCompanies = async (): Promise<ICompany[]> => {
 
     return data;
   } catch (error) {
-    throw new Error("Houve um erro ao obter os itens");
+    throw new Error("An errror ocurred while getting companies");
+  }
+};
+
+const createCompany = async (companyData: Pick<ICompany, "name">) => {
+  try {
+    const { data } = await axios.post(
+      "https://my-json-server.typicode.com/tractian/fake-api/companies",
+      companyData
+    );
+
+    return data;
+  } catch (error) {
+    throw new Error("An errror ocurred while creting companies");
   }
 };
 
 export default {
   getAllCompanies,
+  createCompany,
 };
