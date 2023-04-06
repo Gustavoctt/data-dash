@@ -1,34 +1,34 @@
 import * as S from "./styles";
-import { Engine, Users, House, Gear } from "@phosphor-icons/react";
 import { Link, useLocation } from "react-router-dom";
+import { Engine, Users, House, Gear } from "@phosphor-icons/react";
 
 export function Sidebar() {
   const location = useLocation();
 
   const buttons = [
     {
-      id: "assets",
-      label: "Assets",
-      path: "/asset",
-      icon: <Engine size={24} />,
-    },
-    {
       id: "company",
       path: "/companies",
-      label: "Empresas",
+      label: "Companies",
       icon: <House size={24} />,
     },
     {
       id: "units",
       path: "/units",
-      label: "Unidades",
+      label: "Units",
       icon: <Gear size={24} />,
     },
     {
       id: "users",
       path: "/users",
-      label: "Usuários",
+      label: "Users",
       icon: <Users size={24} />,
+    },
+    {
+      id: "assets",
+      label: "Assets",
+      path: "/asset",
+      icon: <Engine size={24} />,
     },
   ];
 
