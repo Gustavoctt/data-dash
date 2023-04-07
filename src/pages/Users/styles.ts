@@ -17,6 +17,13 @@ export const HistoryContainer = styled.main`
   padding: 1rem;
   display: flex;
   flex-direction: column;
+`;
+
+export const Header = styled.header`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
   h2 {
     color: var(--gray-700);
   }
