@@ -5,12 +5,14 @@ import { Assets } from "../../services";
 import { Eye } from "@phosphor-icons/react";
 import { useEffect, useState } from "react";
 import { IAssets } from "../../types/assets";
-import { Alert, Input, Skeleton, Typography } from "antd";
+import { Input, notification, Skeleton, Typography } from "antd";
 import { Status } from "../../components/Status";
 
 export function Home() {
   const [assets, setAssets] = useState<IAssets[]>([]);
   const [search, setSearch] = useState<string>("");
+
+  const [api, contextHolder] = notification.useNotification();
   const { hideLoading, showLoading, isLoading } = Loading.useLoading();
 
   useEffect(() => {
@@ -24,14 +26,7 @@ export function Home() {
 
       setAssets(allAssets);
     } catch (error) {
-      return (
-        <Alert
-          message="Error"
-          description="There was an error getting the assets, please try again!"
-          type="error"
-          showIcon
-        />
-      );
+      openErrorNotification();
     } finally {
       hideLoading();
     }
@@ -47,8 +42,15 @@ export function Home() {
     return false;
   });
 
+  const openErrorNotification = () => {
+    api.error({
+      message: "Error when creating a new assets, please try again!",
+    });
+  };
+
   return (
     <S.HomeContainer>
+      {contextHolder}
       <S.Content>
         <Box>
           <Skeleton loading={isLoading}>

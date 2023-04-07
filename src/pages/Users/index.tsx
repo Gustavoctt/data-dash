@@ -1,4 +1,4 @@
-import { Alert, Input, Skeleton, Typography } from "antd";
+import { Input, notification, Skeleton, Typography } from "antd";
 import { Loading } from "../../hooks";
 import Box from "../../components/Box";
 import { IUsers } from "../../types/users";
@@ -14,6 +14,8 @@ interface IUsersWhithUnit extends IUsers {
 export function PageUsers() {
   const [users, setUsers] = useState<IUsersWhithUnit[]>([]);
   const [search, setSearch] = useState<string>("");
+
+  const [api, contextHolder] = notification.useNotification();
   const { hideLoading, showLoading, isLoading } = Loading.useLoading();
 
   useEffect(() => {
@@ -38,17 +40,16 @@ export function PageUsers() {
 
       setUsers(usersWithUnits);
     } catch (error) {
-      return (
-        <Alert
-          message="Error"
-          description="There was an error getting the users, please try again!"
-          type="error"
-          showIcon
-        />
-      );
+      openErrorNotification();
     } finally {
       hideLoading();
     }
+  };
+
+  const openErrorNotification = () => {
+    api.error({
+      message: "There was an error getting the users, please try again!",
+    });
   };
 
   const filteredUsers = users.filter((user) => {
@@ -64,6 +65,7 @@ export function PageUsers() {
 
   return (
     <S.HomeContainer>
+      {contextHolder}
       <S.Content>
         <Box>
           <Skeleton loading={isLoading}>

@@ -22,14 +22,8 @@ export function PageCompanies() {
   const [search, setSearch] = useState<string>("");
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
-  const { hideLoading, showLoading, isLoading } = Loading.useLoading();
   const [api, contextHolder] = notification.useNotification();
-
-  const openErrorNotification = () => {
-    api.error({
-      message: "Error when creating a new company, please try again!",
-    });
-  };
+  const { hideLoading, showLoading, isLoading } = Loading.useLoading();
 
   useEffect(() => {
     getAllCompanies();
@@ -67,6 +61,12 @@ export function PageCompanies() {
       hideLoading();
       setIsModalOpen(false);
     }
+  };
+
+  const openErrorNotification = () => {
+    api.error({
+      message: "Error when creating a new company, please try again!",
+    });
   };
 
   const filteredCompanies = companies.filter((company) => {

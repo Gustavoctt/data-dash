@@ -1,7 +1,6 @@
 import * as S from "./styles";
 import { Loading } from "../../hooks";
 import Box from "../../components/Box";
-import { Alert, Image, Skeleton, Typography } from "antd";
 import * as Highcharts from "highcharts";
 import { IUnits } from "../../types/units";
 import { IUsers } from "../../types/users";
@@ -12,12 +11,13 @@ import { ICompany } from "../../types/companies";
 import { Status } from "../../components/Status";
 import { AssetInfo } from "../../components/AssetInfo";
 import HighchartsReact from "highcharts-react-official";
+import { Image, notification, Skeleton, Typography } from "antd";
 import { Assets, Companies, Units, Users } from "../../services";
 import { getFirstLetter, normalizeDateToLocale } from "../../utils";
 
 interface IAssetWithUsers {
-  uniqueAsset: IAssets | undefined;
-  usersAssignedWithAsset: IUsers[] | undefined;
+  uniqueAsset: IAssets;
+  usersAssignedWithAsset: IUsers[];
   usersWithCompany: ICompany[];
   usersWithUnits: IUnits[];
 }
@@ -25,9 +25,16 @@ interface IAssetWithUsers {
 export function Asset() {
   const [asset, setAsset] = useState<IAssetWithUsers>();
 
+  const [api, contextHolder] = notification.useNotification();
   const { hideLoading, showLoading, isLoading } = Loading.useLoading();
 
   const { id } = useParams();
+
+  useEffect(() => {
+    if (id) {
+      getAsset(id);
+    }
+  }, [id]);
 
   const getAsset = async (id: string | number) => {
     try {
@@ -56,24 +63,17 @@ export function Asset() {
         usersWithUnits,
       });
     } catch (error) {
-      return (
-        <Alert
-          message="Error"
-          description="There was an error get asset, please try again!"
-          type="error"
-          showIcon
-        />
-      );
+      openErrorNotification();
     } finally {
       hideLoading();
     }
   };
 
-  useEffect(() => {
-    if (id) {
-      getAsset(id);
-    }
-  }, [id]);
+  const openErrorNotification = () => {
+    api.error({
+      message: "There was an error get asset, please try again!",
+    });
+  };
 
   const options: Highcharts.Options = {
     chart: {
@@ -104,6 +104,7 @@ export function Asset() {
   };
   return (
     <S.Container>
+      {contextHolder}
       <S.ContainerRigth>
         <S.Header>
           <S.AssetData>
