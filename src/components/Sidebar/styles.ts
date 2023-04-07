@@ -8,12 +8,16 @@ export const Sidebar = styled.div`
   height: 100vh;
   position: fixed;
 
-  padding-top: 90px;
   background-color: var(--white);
   z-index: 1000;
 
   a {
     text-decoration: none;
+  }
+
+  img {
+    display: flex;
+    /* width: 50%; */
   }
 `;
 

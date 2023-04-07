@@ -43,6 +43,14 @@ export const CompanyInfo = styled(Box)`
   justify-content: center;
 `;
 
+export const MachineInfo = styled.div`
+  display: flex;
+  margin-top: 24px;
+  width: fit-content;
+  /* min-width: 150px; */
+  gap: 1rem;
+`;
+
 export const Content = styled.div`
   display: grid;
   margin-top: 2rem;

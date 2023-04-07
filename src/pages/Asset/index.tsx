@@ -75,6 +75,8 @@ export function Asset() {
     });
   };
 
+  console.log(asset?.uniqueAsset.specifications);
+
   const options: Highcharts.Options = {
     chart: {
       width: 500,
@@ -89,11 +91,11 @@ export function Asset() {
         type: "pie",
         data: [
           {
-            name: "Vida Útil",
+            name: "Health score",
             y: asset?.uniqueAsset?.healthscore,
           },
           {
-            name: "Desgaste",
+            name: "Wear",
             y:
               asset?.uniqueAsset?.healthscore &&
               100 - asset?.uniqueAsset?.healthscore,
@@ -131,6 +133,41 @@ export function Asset() {
           </S.CompanyInfo>
         </S.Header>
 
+        <S.MachineInfo>
+          <Box>
+            <Skeleton
+              style={{ width: "140px" }}
+              paragraph={{ rows: 1 }}
+              loading={isLoading}
+            >
+              <Typography.Text>
+                Temp: {asset?.uniqueAsset.specifications.maxTemp || 0}°C
+              </Typography.Text>
+            </Skeleton>
+          </Box>
+          <Box>
+            <Skeleton
+              style={{ width: "140px" }}
+              paragraph={{ rows: 1 }}
+              loading={isLoading}
+            >
+              <Typography.Text>
+                Power: {asset?.uniqueAsset.specifications.power || 0}kwh
+              </Typography.Text>
+            </Skeleton>
+          </Box>
+          <Box>
+            <Skeleton
+              style={{ width: "140px" }}
+              paragraph={{ rows: 1 }}
+              loading={isLoading}
+            >
+              <Typography.Text>
+                RPM: {asset?.uniqueAsset.specifications.rpm || 0}
+              </Typography.Text>
+            </Skeleton>
+          </Box>
+        </S.MachineInfo>
         <S.Content>
           <Box>
             <Typography.Title level={2}>Health Score</Typography.Title>
@@ -144,7 +181,7 @@ export function Asset() {
               <Skeleton loading={isLoading}>
                 <thead>
                   <tr>
-                    <th>Data</th>
+                    <th>Date</th>
                     <th>Status</th>
                   </tr>
                 </thead>

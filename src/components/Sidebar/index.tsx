@@ -1,6 +1,7 @@
 import * as S from "./styles";
 import { Link, useLocation } from "react-router-dom";
 import { Engine, Users, House, Gear } from "@phosphor-icons/react";
+import TractianLogo from "../../images/tractian.png";
 
 export function Sidebar() {
   const location = useLocation();
@@ -40,6 +41,7 @@ export function Sidebar() {
 
   return (
     <S.Sidebar>
+      <img src={TractianLogo} />
       {buttons.map((button) => (
         <Link to={button.path} key={button.id}>
           <S.SidebarContent isSelected={isSelected(button)}>
