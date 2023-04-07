@@ -5,7 +5,7 @@ import { Assets } from "../../services";
 import { Eye } from "@phosphor-icons/react";
 import { useEffect, useState } from "react";
 import { IAssets } from "../../types/assets";
-import { Alert, Input, Skeleton } from "antd";
+import { Alert, Input, Skeleton, Typography } from "antd";
 import { Status } from "../../components/Status";
 
 export function Home() {
@@ -53,7 +53,7 @@ export function Home() {
         <Box>
           <Skeleton loading={isLoading}>
             <S.HistoryContainer>
-              <h1>All assets</h1>
+              <Typography.Title level={2}>All assets</Typography.Title>
 
               <S.HistoryList>
                 <Input

@@ -1,4 +1,4 @@
-import { Alert, Input, Skeleton } from "antd";
+import { Alert, Input, Skeleton, Typography } from "antd";
 import { Loading } from "../../hooks";
 import { IUnits } from "../../types/units";
 import { useEffect, useState } from "react";
@@ -71,7 +71,7 @@ export function PageUnits() {
         <Box>
           <Skeleton loading={isLoading}>
             <S.HistoryContainer>
-              <h1>Units</h1>
+              <Typography.Title level={2}>Units</Typography.Title>
 
               <S.HistoryList>
                 <Input

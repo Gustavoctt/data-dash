@@ -1,4 +1,4 @@
-import { Alert, Input, Skeleton } from "antd";
+import { Alert, Input, Skeleton, Typography } from "antd";
 import { Loading } from "../../hooks";
 import Box from "../../components/Box";
 import { IUsers } from "../../types/users";
@@ -68,7 +68,7 @@ export function PageUsers() {
         <Box>
           <Skeleton loading={isLoading}>
             <S.HistoryContainer>
-              <h1>Users</h1>
+              <Typography.Title level={2}>Users</Typography.Title>
 
               <S.HistoryList>
                 <Input

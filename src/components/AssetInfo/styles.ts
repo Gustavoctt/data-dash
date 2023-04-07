@@ -8,4 +8,9 @@ export const Info = styled(Box)`
   align-items: center;
 
   gap: 2rem;
+
+  div {
+    display: flex;
+    flex-direction: column;
+  }
 `;

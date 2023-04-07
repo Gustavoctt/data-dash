@@ -9,7 +9,7 @@ export const Sidebar = styled.div`
   position: fixed;
 
   padding-top: 90px;
-  background-color: #ffffff;
+  background-color: var(--white);
   z-index: 1000;
 
   a {
@@ -29,8 +29,8 @@ export const SidebarContent = styled.div<SidebarProps>`
     padding: 12px 0px 12px 24px;
 
     gap: 0.85rem;
-    color: ${isSelected ? "#0D0D54" : "#4f5b67"};
-    background-color: ${isSelected && "#F7F7FB"};
+    color: ${isSelected ? "var(--blue)" : "var(--gray-700)"};
+    background-color: ${isSelected && "var(--gray-200)"};
     margin-top: 8px;
     cursor: pointer;
     text-decoration: none;
@@ -49,7 +49,7 @@ export const SidebarContent = styled.div<SidebarProps>`
         border-radius: 4px 0 0 4px;
         height: 48px;
         z-index: 1000;
-        background-color: #0d0d54;
+        background-color: var(--blue);
       }
     `}
   `}

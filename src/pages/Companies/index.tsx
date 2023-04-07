@@ -13,6 +13,7 @@ import {
   Modal,
   notification,
   Skeleton,
+  Typography,
 } from "antd";
 
 export function PageCompanies() {
@@ -82,12 +83,13 @@ export function PageCompanies() {
           <Skeleton loading={isLoading}>
             <S.HistoryContainer>
               <S.Header>
-                <h1>Companies</h1>
+                <Typography.Title level={2}>Companies</Typography.Title>
 
                 <S.AntDesignButton
                   type="primary"
                   onClick={() => setIsModalOpen(!isModalOpen)}
                   icon={<PlusCircle size={24} />}
+                  style={{ backgroundColor: "var(--blue)" }}
                 >
                   New company
                 </S.AntDesignButton>
@@ -147,7 +149,12 @@ export function PageCompanies() {
               justifyContent: "flex-end",
             }}
           >
-            <Button type="default" htmlType="submit" loading={isLoading}>
+            <Button
+              type="primary"
+              htmlType="submit"
+              loading={isLoading}
+              style={{ backgroundColor: "var(--green)" }}
+            >
               Submit
             </Button>
           </Form.Item>

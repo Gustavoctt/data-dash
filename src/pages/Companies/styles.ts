@@ -12,17 +12,6 @@ export const Content = styled.div`
   width: 100vw;
 `;
 
-export const Box = styled.div`
-  width: 100%;
-  gap: 1.25rem;
-  padding: 16px;
-  display: flex;
-  margin-top: 2rem;
-  border-radius: 12px;
-  flex-direction: column;
-  background-color: #202024;
-`;
-
 export const HistoryContainer = styled.main`
   flex: 1;
   padding: 1rem;
@@ -35,16 +24,14 @@ export const Header = styled.header`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  h1 {
-    font-size: 1.5rem;
-    color: #4f5b67;
+  h2 {
+    color: var(--gray-700);
   }
 `;
 
 export const HistoryList = styled.div`
   flex: 1;
   overflow: auto;
-  margin-top: 2rem;
 
   input {
     margin-bottom: 2rem;
@@ -54,10 +41,10 @@ export const HistoryList = styled.div`
     border-collapse: collapse;
     min-width: 600px;
     th {
-      background-color: #f3f6f9;
+      background-color: var(--gray-300);
       padding: 1rem;
       text-align: left;
-      color: #464e5f;
+      color: var(--gray-700);
       font-size: 0.75rem;
       line-height: 1.4;
       &:first-child {
@@ -70,15 +57,15 @@ export const HistoryList = styled.div`
       }
     }
     tr {
-      background-color: #fcfcfc;
+      background-color: var(--gray-100);
       &:nth-child(even) {
-        background-color: #f7f7f7;
+        background-color: var(--gray-200);
       }
     }
     td {
       padding: 1rem;
       text-align: left;
-      color: #464e5f;
+      color: var(--gray-700);
       font-size: 0.85rem;
       line-height: 1.4;
     }

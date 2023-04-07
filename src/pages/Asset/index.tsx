@@ -1,7 +1,7 @@
 import * as S from "./styles";
 import { Loading } from "../../hooks";
 import Box from "../../components/Box";
-import { Alert, Image, Skeleton } from "antd";
+import { Alert, Image, Skeleton, Typography } from "antd";
 import * as Highcharts from "highcharts";
 import { IUnits } from "../../types/units";
 import { IUsers } from "../../types/users";
@@ -120,21 +120,25 @@ export function Asset() {
               title={false}
               loading={isLoading}
             >
-              <p>{asset?.usersWithCompany.map((company) => company.name)}</p>
-              <p>{asset?.usersWithUnits.map((unit) => unit.name)}</p>
+              <Typography.Text>
+                {asset?.usersWithCompany.map((company) => company.name)}
+              </Typography.Text>
+              <Typography.Text>
+                {asset?.usersWithUnits.map((unit) => unit.name)}
+              </Typography.Text>
             </Skeleton>
           </S.CompanyInfo>
         </S.Header>
 
         <S.Content>
           <Box>
-            <h1>Health Score</h1>
+            <Typography.Title level={2}>Health Score</Typography.Title>
             <Skeleton loading={isLoading}>
               <HighchartsReact highcharts={Highcharts} options={options} />
             </Skeleton>
           </Box>
           <Box>
-            <h1>Health History</h1>
+            <Typography.Title level={2}>Health History</Typography.Title>
             <S.Table>
               <Skeleton loading={isLoading}>
                 <thead>
@@ -158,7 +162,7 @@ export function Asset() {
           </Box>
           {asset?.usersAssignedWithAsset && (
             <Box>
-              <h1>Assigned Users ID</h1>
+              <Typography.Title level={2}>Assigned Users ID</Typography.Title>
               <S.Table>
                 <Skeleton loading={isLoading}>
                   <thead>

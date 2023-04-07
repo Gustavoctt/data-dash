@@ -1,5 +1,5 @@
 import { WarningCircle, CheckCircle, StopCircle } from "@phosphor-icons/react";
-import { Skeleton } from "antd";
+import { Skeleton, Typography } from "antd";
 import { Loading } from "../../hooks";
 import * as S from "./styles";
 
@@ -20,8 +20,8 @@ export function AssetInfo({ name, model, status }: AssetInfoProps) {
         title={false}
       >
         <div>
-          <p>Name: {name}</p>
-          <p>Model: {model} </p>
+          <Typography.Text>Name: {name}</Typography.Text>
+          <Typography.Text>Model: {model} </Typography.Text>
         </div>
         {status === "inAlert" && <WarningCircle size={32} color="#C11574" />}
         {status === "inDowntime" && <StopCircle size={32} color="#cab02b" />}
