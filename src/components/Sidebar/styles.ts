@@ -4,7 +4,7 @@ export const Sidebar = styled.div`
   display: flex;
   flex-direction: column;
 
-  width: 240px;
+  max-width: 240px;
   height: 100vh;
   position: fixed;
 
@@ -17,7 +17,10 @@ export const Sidebar = styled.div`
 
   img {
     display: flex;
-    /* width: 50%; */
+  }
+
+  @media (max-width: 760px) {
+    width: 160px;
   }
 `;
 
@@ -56,5 +59,9 @@ export const SidebarContent = styled.div<SidebarProps>`
         background-color: var(--blue);
       }
     `}
+
+    @media (max-width: 760px) {
+      padding: 8px 0px 8px 16px;
+    }
   `}
 `;

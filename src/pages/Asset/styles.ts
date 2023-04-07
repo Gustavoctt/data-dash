@@ -7,6 +7,11 @@ export const Container = styled.div`
   display: flex;
   flex-direction: row;
   margin-left: 240px;
+
+  @media (max-width: 760px) {
+    margin-left: 160px;
+    overflow: hidden;
+  }
 `;
 
 export const ContainerRigth = styled.div`
@@ -17,12 +22,19 @@ export const ContainerRigth = styled.div`
 
   display: flex;
   flex-direction: column;
+  overflow: auto;
 `;
 
 export const Header = styled.header`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+
+  @media (max-width: 760px) {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
 `;
 
 export const AssetData = styled.div`
@@ -47,7 +59,6 @@ export const MachineInfo = styled.div`
   display: flex;
   margin-top: 24px;
   width: fit-content;
-  /* min-width: 150px; */
   gap: 1rem;
 `;
 
@@ -56,12 +67,16 @@ export const Content = styled.div`
   margin-top: 2rem;
   grid-template-columns: 1fr 1fr;
   gap: 24px;
+
+  @media (max-width: 760px) {
+    grid-template-columns: 1fr;
+  }
 `;
 
 export const Table = styled.table`
   width: 100%;
   border-collapse: collapse;
-  min-width: 400px;
+  min-width: 300px;
 
   th {
     background-color: #f3f6f9;

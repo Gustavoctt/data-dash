@@ -79,8 +79,6 @@ export function Asset() {
 
   const options: Highcharts.Options = {
     chart: {
-      width: 500,
-      height: 300,
       backgroundColor: "",
     },
     title: {
@@ -103,6 +101,15 @@ export function Asset() {
         ],
       },
     ],
+    responsive: {
+      rules: [
+        {
+          condition: {
+            maxWidth: 300,
+          },
+        },
+      ],
+    },
   };
   return (
     <S.Container>

@@ -4,6 +4,11 @@ export const HomeContainer = styled.div`
   display: flex;
   flex-direction: row;
   margin-left: 240px;
+
+  @media (max-width: 760px) {
+    margin-left: 160px;
+    overflow: hidden;
+  }
 `;
 
 export const Content = styled.div`
@@ -30,7 +35,7 @@ export const HistoryList = styled.div`
   table {
     width: 100%;
     border-collapse: collapse;
-    min-width: 600px;
+    min-width: 400px;
     th {
       background-color: var(--gray-300);
       padding: 1rem;
@@ -59,6 +64,12 @@ export const HistoryList = styled.div`
       color: var(--gray-700);
       font-size: 0.85rem;
       line-height: 1.4;
+    }
+  }
+
+  @media (max-width: 760px) {
+    table {
+      overflow-x: auto;
     }
   }
 `;
