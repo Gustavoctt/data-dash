@@ -1,12 +1,13 @@
 import styled from "styled-components";
 import Box from "../../components/Box";
-
 import { Avatar } from "antd";
 
 export const Container = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   margin-left: 240px;
+
+  padding: 20px;
 
   @media (max-width: 760px) {
     margin-left: 160px;
@@ -14,62 +15,119 @@ export const Container = styled.div`
   }
 `;
 
-export const ContainerRigth = styled.div`
-  width: 100vw;
-  height: 100vh;
-
-  padding: 20px 40px;
-
-  display: flex;
-  flex-direction: column;
-  overflow: auto;
-`;
-
-export const Header = styled.header`
+export const AssetBox = styled(Box)`
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+`;
 
-  @media (max-width: 760px) {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
+export const ContentLeft = styled.div`
+  max-width: 344px;
+  height: auto;
+`;
+
+export const ContentRight = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+export const ContentMachineData = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+`;
+
+export const AllData = styled.div`
+  display: flex;
+  gap: 60px;
+`;
+
+export const DataLeft = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+`;
+
+export const MachineData = styled.div`
+  display: flex;
+  flex-direction: column;
+  p {
+    font-size: 16px;
   }
 `;
 
-export const AssetData = styled.div`
+export const Specification = styled.div`
   display: flex;
-  gap: 24px;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 16px;
 `;
 
-export const Specifications = styled.div`
+export const SpecificationData = styled.div`
   display: flex;
   flex-direction: row;
-  gap: 24px;
-  margin-top: 24px;
+  gap: 12px;
+
+  div {
+    p {
+      font-size: 14px;
+    }
+    span {
+      font-size: 12px;
+    }
+  }
 `;
 
-export const CompanyInfo = styled(Box)`
+export const HealthBox = styled.div`
+  margin-top: 16px;
+`;
+
+export const DataRight = styled.div`
   display: flex;
-  width: fit-content;
+  flex-direction: column;
+  gap: 32px;
+`;
+
+export const Buttons = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 6px;
+`;
+
+export const AssignedUsers = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  div {
+    display: flex;
+    gap: 6px;
+  }
+`;
+
+export const AvatarComponent = styled(Avatar)`
+  display: flex;
+  align-items: center;
   justify-content: center;
+  color: var(--gray-800);
 `;
 
-export const MachineInfo = styled.div`
+export const Graphics = styled.div`
   display: flex;
+  flex-direction: row;
   margin-top: 24px;
-  width: fit-content;
-  gap: 1rem;
+  gap: 24px;
 `;
 
-export const Content = styled.div`
-  display: grid;
-  margin-top: 2rem;
-  grid-template-columns: 1fr 1fr;
+export const ListService = styled.div`
+  display: flex;
+  width: 100%;
+  background-color: var(--gray-300);
   gap: 24px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  align-items: center;
 
-  @media (max-width: 760px) {
-    grid-template-columns: 1fr;
+  + div {
+    margin-top: 8px;
   }
 `;
 
@@ -107,11 +165,4 @@ export const Table = styled.table`
     font-size: 0.85rem;
     line-height: 1.4;
   }
-`;
-
-export const AvatarComponent = styled(Avatar)`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 6px 0 0 6px;
 `;

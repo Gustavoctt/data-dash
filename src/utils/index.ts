@@ -4,11 +4,11 @@ export const normalizeDateToLocale = (date: string) => {
     hour12: false,
   });
 
-  const [normalizedDate, time] = parsedDate.split(" ");
+  const [normalizedDate, time] = parsedDate.split(", ");
 
   const normalizedTime = time.substring(0, 5);
 
-  return `${normalizedDate} às ${normalizedTime}`;
+  return `${normalizedDate} - ${normalizedTime}`;
 };
 
 export function getFirstLetter(name: string) {
