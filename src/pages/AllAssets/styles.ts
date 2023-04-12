@@ -75,17 +75,3 @@ export const HistoryList = styled.div`
     }
   }
 `;
-
-export const Button = styled(Link)`
-  text-decoration: none;
-  background-color: var(--blue);
-  padding: 6px 12px;
-  border: none;
-  border-radius: 8px;
-  color: #fafafa;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-
-  cursor: pointer;
-`;

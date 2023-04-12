@@ -5,8 +5,16 @@ import { Assets } from "../../services";
 import { Eye } from "@phosphor-icons/react";
 import { useEffect, useState } from "react";
 import { IAssets } from "../../types/assets";
-import { Input, notification, Progress, Skeleton, Typography } from "antd";
+import {
+  Button,
+  Input,
+  notification,
+  Progress,
+  Skeleton,
+  Typography,
+} from "antd";
 import { Status } from "../../components/Status";
+import { Link } from "react-router-dom";
 
 export function AllAssets() {
   const [assets, setAssets] = useState<IAssets[]>([]);
@@ -97,10 +105,14 @@ export function AllAssets() {
                           <Status status={asset.status} />
                         </td>
                         <td>
-                          <S.Button to={`/asset/${asset.id}`}>
-                            <Eye size={24} />
-                            View
-                          </S.Button>
+                          <Link to={`/asset/${asset.id}`}>
+                            <Button
+                              type="link"
+                              style={{ color: "var(--blue)" }}
+                            >
+                              View asset
+                            </Button>
+                          </Link>
                         </td>
                       </tr>
                     ))}

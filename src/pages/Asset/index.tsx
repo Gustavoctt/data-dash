@@ -150,7 +150,7 @@ export function Asset() {
           <Skeleton loading={isLoading} paragraph={{ rows: 1 }} title={false}>
             <Image
               src={asset?.uniqueAsset?.image}
-              style={{ borderRadius: "8px" }}
+              style={{ borderRadius: "8px", maxWidth: "655px" }}
             />
           </Skeleton>
           <S.ContentAsset>
