@@ -8,7 +8,7 @@ import { IAssets } from "../../types/assets";
 import { Input, notification, Skeleton, Typography } from "antd";
 import { Status } from "../../components/Status";
 
-export function Home() {
+export function AllAssets() {
   const [assets, setAssets] = useState<IAssets[]>([]);
   const [search, setSearch] = useState<string>("");
 

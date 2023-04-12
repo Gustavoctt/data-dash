@@ -75,8 +75,6 @@ export function Asset() {
     });
   };
 
-  console.log(asset?.uniqueAsset.specifications);
-
   const options: Highcharts.Options = {
     chart: {
       backgroundColor: "",

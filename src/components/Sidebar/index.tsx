@@ -1,12 +1,18 @@
 import * as S from "./styles";
 import { Link, useLocation } from "react-router-dom";
-import { Engine, Users, House, Gear } from "@phosphor-icons/react";
+import { Engine, Users, House, Gear, ChartBar } from "@phosphor-icons/react";
 import TractianLogo from "../../images/tractian.png";
 
 export function Sidebar() {
   const location = useLocation();
 
   const buttons = [
+    {
+      id: "dashboard",
+      path: "/",
+      label: "Dashboard",
+      icon: <ChartBar size={24} />,
+    },
     {
       id: "company",
       path: "/companies",
