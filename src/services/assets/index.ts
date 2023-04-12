@@ -25,7 +25,26 @@ const getUniqueAsset = async (id: number | string): Promise<IAssets> => {
   }
 };
 
+const addAssignedUsers = async (
+  id: number | string,
+  usersId: number[]
+): Promise<IAssets> => {
+  try {
+    const { data } = await axios.patch(
+      `https://my-json-server.typicode.com/tractian/fake-api/assets/${id}`,
+      {
+        assignedUserIds: usersId,
+      }
+    );
+
+    return data;
+  } catch (error) {
+    throw new Error("Houve um erro ao obter os itens");
+  }
+};
+
 export default {
   getAllAssets,
   getUniqueAsset,
+  addAssignedUsers,
 };

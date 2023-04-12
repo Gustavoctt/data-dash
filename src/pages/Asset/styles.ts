@@ -1,7 +1,4 @@
 import styled from "styled-components";
-import Box from "../../components/Box";
-
-import { Avatar } from "antd";
 
 export const Container = styled.div`
   display: flex;
@@ -19,6 +16,10 @@ export const ContentBox = styled.div`
   display: grid;
   grid-template-columns: 1fr 2fr;
   gap: 24px;
+
+  @media (max-width: 600px) {
+    grid-template-columns: 0fr 1fr;
+  }
 `;
 
 export const ContentAsset = styled.div`
@@ -30,6 +31,14 @@ export const MachineData = styled.div`
   display: grid;
   grid-template-columns: 2fr 2fr 1fr;
   gap: 24px;
+
+  @media (max-width: 900px) {
+    grid-template-columns: 2fr 1fr;
+  }
+
+  @media (max-width: 760px) {
+    grid-template-columns: 1fr;
+  }
 `;
 
 export const ContentData = styled.div`
@@ -68,6 +77,10 @@ export const OrderData = styled.div`
   display: grid;
   grid-template-columns: 1fr 2fr;
   gap: 24px;
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+  }
 `;
 
 export const FooterData = styled.footer`
