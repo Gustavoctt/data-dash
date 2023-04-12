@@ -5,7 +5,7 @@ import { Assets } from "../../services";
 import { Eye } from "@phosphor-icons/react";
 import { useEffect, useState } from "react";
 import { IAssets } from "../../types/assets";
-import { Input, notification, Skeleton, Typography } from "antd";
+import { Input, notification, Progress, Skeleton, Typography } from "antd";
 import { Status } from "../../components/Status";
 
 export function AllAssets() {
@@ -79,7 +79,20 @@ export function AllAssets() {
                       <tr key={asset.id}>
                         <td>{asset.id}</td>
                         <td>{asset.name}</td>
-                        <td>{asset.healthscore}%</td>
+                        <td>
+                          <Progress
+                            percent={asset.healthscore}
+                            size="small"
+                            status="active"
+                            strokeColor={{
+                              "0%": "var(--yellow)",
+                              "100%":
+                                asset.healthscore < 70
+                                  ? "var(--red)"
+                                  : "var(--green)",
+                            }}
+                          />
+                        </td>
                         <td>
                           <Status status={asset.status} />
                         </td>

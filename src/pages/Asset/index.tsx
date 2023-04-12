@@ -1,7 +1,6 @@
 import * as S from "./styles";
 import { Loading } from "../../hooks";
 import Box from "../../components/Box";
-import * as Highcharts from "highcharts";
 import { IUnits } from "../../types/units";
 import { IUsers } from "../../types/users";
 import { useEffect, useState } from "react";
@@ -9,11 +8,19 @@ import { useParams } from "react-router-dom";
 import { IAssets } from "../../types/assets";
 import { ICompany } from "../../types/companies";
 import { Status } from "../../components/Status";
-import { AssetInfo } from "../../components/AssetInfo";
-import HighchartsReact from "highcharts-react-official";
-import { Image, notification, Skeleton, Typography } from "antd";
+import {
+  Avatar,
+  Button,
+  Divider,
+  Image,
+  notification,
+  Progress,
+  Skeleton,
+  Typography,
+} from "antd";
 import { Assets, Companies, Units, Users } from "../../services";
 import { getFirstLetter, normalizeDateToLocale } from "../../utils";
+import { FireSimple, Gear, Lightning, Plus } from "@phosphor-icons/react";
 
 interface IAssetWithUsers {
   uniqueAsset: IAssets;
@@ -75,170 +82,247 @@ export function Asset() {
     });
   };
 
-  const options: Highcharts.Options = {
-    chart: {
-      backgroundColor: "",
-    },
-    title: {
-      text: "",
-    },
-    series: [
-      {
-        type: "pie",
-        data: [
-          {
-            name: "Health score",
-            y: asset?.uniqueAsset?.healthscore,
-          },
-          {
-            name: "Wear",
-            y:
-              asset?.uniqueAsset?.healthscore &&
-              100 - asset?.uniqueAsset?.healthscore,
-          },
-        ],
-      },
-    ],
-    responsive: {
-      rules: [
-        {
-          condition: {
-            maxWidth: 300,
-          },
-        },
-      ],
-    },
-  };
   return (
     <S.Container>
       {contextHolder}
-      <S.ContainerRigth>
-        <S.Header>
-          <S.AssetData>
-            <AssetInfo
-              name={asset?.uniqueAsset?.name}
-              model={asset?.uniqueAsset?.model}
-              status={asset?.uniqueAsset?.status}
+      <Box>
+        <S.ContentBox>
+          <Skeleton loading={isLoading} paragraph={{ rows: 1 }} title={false}>
+            <Image
+              src={asset?.uniqueAsset?.image}
+              style={{ borderRadius: "8px" }}
             />
-          </S.AssetData>
-          <S.CompanyInfo>
-            <Skeleton
-              style={{ width: "140px" }}
-              paragraph={{ rows: 2 }}
-              title={false}
-              loading={isLoading}
-            >
-              <Typography.Text>
-                {asset?.usersWithCompany.map((company) => company.name)}
-              </Typography.Text>
-              <Typography.Text>
-                {asset?.usersWithUnits.map((unit) => unit.name)}
-              </Typography.Text>
-            </Skeleton>
-          </S.CompanyInfo>
-        </S.Header>
-
-        <S.MachineInfo>
-          <Box>
-            <Skeleton
-              style={{ width: "140px" }}
-              paragraph={{ rows: 1 }}
-              loading={isLoading}
-            >
-              <Typography.Text>
-                Temp: {asset?.uniqueAsset.specifications.maxTemp || 0}°C
-              </Typography.Text>
-            </Skeleton>
-          </Box>
-          <Box>
-            <Skeleton
-              style={{ width: "140px" }}
-              paragraph={{ rows: 1 }}
-              loading={isLoading}
-            >
-              <Typography.Text>
-                Power: {asset?.uniqueAsset.specifications.power || 0}kwh
-              </Typography.Text>
-            </Skeleton>
-          </Box>
-          <Box>
-            <Skeleton
-              style={{ width: "140px" }}
-              paragraph={{ rows: 1 }}
-              loading={isLoading}
-            >
-              <Typography.Text>
-                RPM: {asset?.uniqueAsset.specifications.rpm || 0}
-              </Typography.Text>
-            </Skeleton>
-          </Box>
-        </S.MachineInfo>
-        <S.Content>
-          <Box>
-            <Typography.Title level={2}>Health Score</Typography.Title>
-            <Skeleton loading={isLoading}>
-              <HighchartsReact highcharts={Highcharts} options={options} />
-            </Skeleton>
-          </Box>
-          <Box>
-            <Typography.Title level={2}>Health History</Typography.Title>
-            <S.Table>
-              <Skeleton loading={isLoading}>
-                <thead>
-                  <tr>
-                    <th>Date</th>
-                    <th>Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {asset?.uniqueAsset?.healthHistory.map((item) => (
-                    <tr key={item.timestamp}>
-                      <td>{normalizeDateToLocale(item.timestamp)}</td>
-                      <td>
-                        <Status status={item.status} />
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </Skeleton>
-            </S.Table>
-          </Box>
-          {asset?.usersAssignedWithAsset && (
-            <Box>
-              <Typography.Title level={2}>Assigned Users ID</Typography.Title>
-              <S.Table>
-                <Skeleton loading={isLoading}>
-                  <thead>
-                    <tr>
-                      <th></th>
-                      <th>Nome</th>
-                      <th>Email</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {asset?.usersAssignedWithAsset.map((user) => (
-                      <tr key={user.id}>
-                        <S.AvatarComponent
-                          style={{ backgroundColor: "#87d068" }}
-                        >
-                          {getFirstLetter(user.name)}
-                        </S.AvatarComponent>
-                        <td>{user.name}</td>
-                        <td>{user.email}</td>
-                      </tr>
-                    ))}
-                  </tbody>
+          </Skeleton>
+          <S.ContentAsset>
+            <S.MachineData>
+              <S.ContentData>
+                <Skeleton
+                  loading={isLoading}
+                  paragraph={{ rows: 5 }}
+                  title={false}
+                >
+                  <Status status={asset?.uniqueAsset.status || "inAlert"} />
+                  <S.TitleMachine>
+                    <Typography.Title level={5} style={{ margin: 0 }}>
+                      {asset?.uniqueAsset.name}
+                    </Typography.Title>
+                    <Typography.Text>{`${asset?.uniqueAsset.model} - sensor (${asset?.uniqueAsset.sensors})`}</Typography.Text>
+                  </S.TitleMachine>
+                  <S.Specifications>
+                    <Typography.Title level={5} style={{ margin: 0 }}>
+                      Specifications
+                    </Typography.Title>
+                    <div>
+                      <Typography.Text
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "6px",
+                        }}
+                      >
+                        <FireSimple /> Temp. Máx
+                      </Typography.Text>
+                      <Typography.Text>
+                        {asset?.uniqueAsset.specifications.maxTemp || 0}°C
+                      </Typography.Text>
+                    </div>
+                    <div>
+                      <Typography.Text
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "6px",
+                        }}
+                      >
+                        <Lightning /> Power
+                      </Typography.Text>
+                      <Typography.Text>
+                        {asset?.uniqueAsset.specifications.power || 0}kwh
+                      </Typography.Text>
+                    </div>
+                    <div>
+                      <Typography.Text
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "6px",
+                        }}
+                      >
+                        <Gear /> RPM
+                      </Typography.Text>
+                      <Typography.Text>
+                        {asset?.uniqueAsset.specifications.rpm || 0}
+                      </Typography.Text>
+                    </div>
+                  </S.Specifications>
                 </Skeleton>
-              </S.Table>
-            </Box>
-          )}
-          <Box>
-            <Skeleton loading={isLoading} paragraph={{ rows: 1 }} title={false}>
-              <Image src={asset?.uniqueAsset?.image} />
-            </Skeleton>
-          </Box>
-        </S.Content>
-      </S.ContainerRigth>
+              </S.ContentData>
+              <S.ContentData>
+                <Skeleton
+                  loading={isLoading}
+                  paragraph={{ rows: 5 }}
+                  title={false}
+                >
+                  <Typography.Text style={{ marginTop: "24px" }}>
+                    Assigned Users
+                  </Typography.Text>
+                  <S.UsersAssigned>
+                    {asset?.usersAssignedWithAsset.map((user) => (
+                      <Avatar
+                        style={{
+                          backgroundColor: "var(--gray-400)",
+                          color: "var(--gray-800)",
+                        }}
+                      >
+                        {getFirstLetter(user.name)}
+                      </Avatar>
+                    ))}
+                    <Button
+                      shape="circle"
+                      icon={<Plus size={16} />}
+                      style={{
+                        display: "flex",
+                        backgroundColor: "var(--blue)",
+                        color: "var(--white)",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    />
+                  </S.UsersAssigned>
+                  <S.Specifications>
+                    <Typography.Title level={5} style={{ margin: 0 }}>
+                      Uptimes
+                    </Typography.Title>
+                    <div>
+                      <Typography.Text
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "6px",
+                        }}
+                      >
+                        All
+                      </Typography.Text>
+                      <Typography.Text>
+                        {asset?.uniqueAsset.metrics.totalUptime.toFixed(2)}
+                      </Typography.Text>
+                    </div>
+                    <div>
+                      <Typography.Text
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "6px",
+                        }}
+                      >
+                        Collection
+                      </Typography.Text>
+                      <Typography.Text>
+                        {asset?.uniqueAsset.metrics.totalCollectsUptime}
+                      </Typography.Text>
+                    </div>
+                    <div>
+                      <Typography.Text
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "6px",
+                        }}
+                      >
+                        Last
+                      </Typography.Text>
+                      <Typography.Text>
+                        {normalizeDateToLocale(
+                          asset?.uniqueAsset.metrics.lastUptimeAt || ""
+                        )}
+                      </Typography.Text>
+                    </div>
+                  </S.Specifications>
+                </Skeleton>
+              </S.ContentData>
+              <S.ContentData>
+                <S.Buttons>
+                  <Button
+                    type="primary"
+                    ghost
+                    style={{
+                      color: "var(--green)",
+                      borderColor: "var(--green)",
+                    }}
+                  >
+                    Edit
+                  </Button>
+                  <Button
+                    type="primary"
+                    ghost
+                    style={{ color: "var(--red)", borderColor: "var(--red)" }}
+                  >
+                    Delete
+                  </Button>
+                </S.Buttons>
+              </S.ContentData>
+            </S.MachineData>
+            <Divider />
+            <S.OrderData>
+              <Skeleton
+                loading={isLoading}
+                paragraph={{ rows: 3 }}
+                title={false}
+              >
+                <S.FooterData>
+                  <Typography.Text>Health</Typography.Text>
+                  <Progress
+                    steps={10}
+                    strokeColor={"var(--green)"}
+                    percent={asset?.uniqueAsset.healthscore}
+                  />
+                </S.FooterData>
+              </Skeleton>
+              <Skeleton
+                loading={isLoading}
+                paragraph={{ rows: 5 }}
+                title={false}
+              >
+                <S.FooterData>
+                  <Typography.Text>Opened work orders</Typography.Text>
+                  <S.WorkOrder>
+                    <Typography.Text>Repair Motor H13D-1</Typography.Text>
+                    <Typography.Text
+                      style={{
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap",
+                        overflow: "hidden",
+                        color: "var(--gray-700)",
+                      }}
+                    >
+                      The Fan is not working properly and needs to be repaired
+                    </Typography.Text>
+                    <Button type="link" style={{ color: "var(--blue)" }}>
+                      View
+                    </Button>
+                  </S.WorkOrder>
+                  <S.WorkOrder>
+                    <Typography.Text>Repair Motor H13D-1</Typography.Text>
+                    <Typography.Text
+                      style={{
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap",
+                        overflow: "hidden",
+                        color: "var(--gray-700)",
+                      }}
+                    >
+                      The Fan is not working properly and needs to be repaired
+                    </Typography.Text>
+                    <Button type="link" style={{ color: "var(--blue)" }}>
+                      View
+                    </Button>
+                  </S.WorkOrder>
+                </S.FooterData>
+              </Skeleton>
+            </S.OrderData>
+          </S.ContentAsset>
+        </S.ContentBox>
+      </Box>
     </S.Container>
   );
 }
